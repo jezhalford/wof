@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+
+import argparse
+import sys
+
+parser = argparse.ArgumentParser(description='Show specified lines from a file.')
+
+parser.add_argument('-a', dest='a', action='store', 
+    help='The starting line number (Optional - defaults to the first line)',
+    default=0, type=int)
+
+parser.add_argument('-b', dest='b', action='store',
+    help='The ending line number (Optional - defaults to the last line)',
+    default=-1, type=int)
+
+parser.add_argument('file', action='store',
+    help='The file whose lines you want to see',
+    nargs='?', metavar='FILE')
+
+arguments = parser.parse_args()
+
+if arguments.file == None:
+    parser.print_help()
+    exit(1)
+
+position = 1;
+
+try:
+    f = open(arguments.file, 'r')
+
+except IOError as e:
+    print "Can't open file " + arguments.file
+    exit(255)
+
+for line in f:
+    if (position >= arguments.a and position <= arguments.b):
+        sys.stdout.write(line)
+
+    if (position > arguments.b):
+        break
+
+    position +=1
+
