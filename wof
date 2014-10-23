@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+#
+# (c) Jez Halford <hello@jezhalford.com>
+#
+
 import argparse
 import sys
 
@@ -7,11 +11,15 @@ parser = argparse.ArgumentParser(description='Show specified lines from a file.'
 
 parser.add_argument('-a', dest='a', action='store', 
     help='The starting line number (Optional - defaults to the first line)',
-    default=0, type=int)
+    default=1, type=int)
 
 parser.add_argument('-b', dest='b', action='store',
     help='The ending line number (Optional - defaults to the last line)',
-    default=-1, type=int)
+    default=None, type=int)
+
+parser.add_argument('--line-nums', dest='nums', action='store_true',
+    help='Show line numbers',
+    default=False)
 
 parser.add_argument('file', action='store',
     help='The file whose lines you want to see',
@@ -23,6 +31,16 @@ if arguments.file == None:
     parser.print_help()
     exit(1)
 
+if arguments.b == None:
+    arguments.b = arguments.a+1
+    endless = True
+else:
+    endless = False
+
+if arguments.a > arguments.b:
+    print "The starting line must be before the ending line."
+    exit(2)
+
 position = 1;
 
 try:
@@ -30,14 +48,22 @@ try:
 
 except IOError as e:
     print "Can't open file " + arguments.file
-    exit(255)
+    exit(3)
 
 for line in f:
-    if (position >= arguments.a and position <= arguments.b):
+    if position >= arguments.a and position <= arguments.b:
+
+        if arguments.nums:
+            sys.stdout.write("\033[94m" + str(position) + ":  \033[0m")
+
         sys.stdout.write(line)
 
-    if (position > arguments.b):
+    if position > arguments.b:
         break
 
     position +=1
 
+    if endless:
+        arguments.b = position + 1
+
+f.close()

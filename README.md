@@ -14,4 +14,12 @@ Window On File
       -h, --help  show this help message and exit
       -a A        The starting line number (Optional - defaults to the first line)
       -b B        The ending line number (Optional - defaults to the last line)
+      --line-nums  Show line numbers
 
+
+Example:
+
+    wof -a 10 -b 20 /path/to/file
+
+## License
+See LICENSE in this repository
