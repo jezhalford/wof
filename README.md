@@ -24,8 +24,7 @@ Example:
 ## Installation
 
 1. Clone this repository somewhere
-2. `cd wof`
-3. `sudo ln -s ./wof /usr/bin/wof`
+2. `sudo ln -s /path/to/wof/wof /usr/bin/wof`
 
 You can then run wof by typing `wof`.
 
