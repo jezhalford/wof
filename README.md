@@ -21,5 +21,13 @@ Example:
 
     wof -a 10 -b 20 /path/to/file
 
+## Installation
+
+1. Clone this repository somewhere
+2. `cd wof`
+3. `sudo ln -s ./wof /usr/bin/wof`
+
+You can then run wof by typing `wof`.
+
 ## License
 See LICENSE in this repository
